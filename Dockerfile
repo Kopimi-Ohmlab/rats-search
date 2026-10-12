@@ -68,5 +68,8 @@ VOLUME /data
 # Default HTTP API port
 EXPOSE 8095
 
+RUN chown -R 1000:1000 /app
+USER 1000
+
 # Run in console mode with spider enabled and 30 max peers
 CMD ["/app/RatsSearch", "--console", "--spider", "--max-peers", "30", "--data-dir", "/data"]
