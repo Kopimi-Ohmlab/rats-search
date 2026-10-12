@@ -33,7 +33,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup MSVC
-        uses: ilammy/msvc-dev-cmd@v4.0.0 
+        uses: ilammy/msvc-dev-cmd@v4
         with:
           arch: x64
 
@@ -570,7 +570,6 @@ jobs:
           files: |
             artifacts/**/*.zip
             artifacts/**/*.exe
-            artifacts/**/*.dmg
             artifacts/**/*.AppImage
             artifacts/**/*.tar.gz
           draft: false
