@@ -33,7 +33,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup MSVC
-        uses: ilammy/msvc-dev-cmd@v4# v1
+        uses: ilammy/msvc-dev-cmd@v4.0.0 
         with:
           arch: x64
 
