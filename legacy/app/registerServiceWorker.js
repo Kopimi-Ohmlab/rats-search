@@ -30,14 +30,21 @@ export default function register() {
 		}
 
 		window.addEventListener('load', () => {
-			const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+			const swUrl = new URL('service-worker.js', `${process.env.PUBLIC_URL}/`);
+			if (
+				swUrl.origin !== window.location.origin ||
+				!/\/service-worker\.js$/.test(swUrl.pathname)
+			) {
+				return;
+			}
+			const safeSwUrl = swUrl.toString();
 
 			if (!isLocalhost) {
 				// Is not local host. Just register service worker
-				registerValidSW(swUrl);
+				registerValidSW(safeSwUrl);
 			} else {
 				// This is running on localhost. Lets check if a service worker still exists or not.
-				checkValidServiceWorker(swUrl);
+				checkValidServiceWorker(safeSwUrl);
 			}
 		});
 	}
@@ -77,9 +84,10 @@ function checkValidServiceWorker(swUrl) {
 	fetch(swUrl)
 		.then(response => {
 			// Ensure service worker exists, and that we really are getting a JS file.
+			const contentType = response.headers.get('content-type') || '';
 			if (
 				response.status === 404 ||
-        response.headers.get('content-type').indexOf('javascript') === -1
+				contentType.indexOf('javascript') === -1
 			) {
 				// No service worker found. Probably a different app. Reload the page.
 				navigator.serviceWorker.ready.then(registration => {
