@@ -113,9 +113,13 @@ module.exports = class Rutor
 
 	async parse(id)
 	{
+		const normalizedId = String(id).trim()
+		if(!/^\d+$/.test(normalizedId))
+			return
+
 		let html; 
 		try {
-			html = await fetch(`http://www.rutor.is/torrent/${id}`)
+			html = await fetch(`http://www.rutor.is/torrent/${normalizedId}`)
 		} catch(err) {
 			return
 		}
@@ -143,7 +147,7 @@ module.exports = class Rutor
 			name: topicTitle,
 			poster: $('#details tbody img').attr('src'),
 			description: $('#details tbody').first().text(),
-			rutorThreadId: parseInt(id),
+			rutorThreadId: parseInt(normalizedId),
 			contentCategory
 		}
     
