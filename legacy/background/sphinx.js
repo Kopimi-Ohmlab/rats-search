@@ -307,7 +307,7 @@ module.exports = async (callback, dataDirectory, onClose, params = {}) => {
 			if (!sphinx.isExternal) 
 			{
 				logT('sphinx', `stoping with sphinx stopwait`);
-				exec(`"${sphinxPath}" --config "${config}" --stopwait`)
+				execFile(sphinxPath, ['--config', config, '--stopwait'])
 			} 
 			else
 			{
