@@ -6,7 +6,7 @@ try{
 const appPath = require('./electronAppPath')
 const fs = require('fs')
 const iconv = require('iconv-lite')
-const { spawn, exec } = require('child_process')
+const { spawn, exec, execFile } = require('child_process')
 const appConfig = require('./config')
 const findFiles = require('./findFiles')
 const _ = require('lodash')
@@ -376,7 +376,7 @@ module.exports = async (callback, dataDirectory, onClose, params = {}) => {
 						for(const table of tables)
 							await mydb.query(`FLUSH RAMCHUNK ${table}`);
 						await mydb.end()
-						exec(`"${oldSphinxPath}" --config "${config}" --stopwait`)
+					execFile(oldSphinxPath, ['--config', config, '--stopwait'])
 					}
 
 					if(data.includes('shutdown complete')) {
